@@ -1,0 +1,1 @@
+Version 1.2 only works for nonword error detection. Real word detection is still in progress developing.
