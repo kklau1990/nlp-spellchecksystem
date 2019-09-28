@@ -7,7 +7,7 @@ from Levenshtein import distance  #Levenshtein distance library
 import nltk #natural language toolkit
 from nltk.tokenize import word_tokenize
 
-def onPopup(event, errorword, detector):
+def onPopup(event, errorword, prefixword, detector):
     # display the popup menu
     errorword = errorword.lower() #convert to lower
     suggested_words = [] #list of suggested words
@@ -20,14 +20,14 @@ def onPopup(event, errorword, detector):
                     (suggested_word, min_edit_distance, frequency)
                 )
     elif detector == 'Real Word':
-        bigramList = DB.bigramFreqTable[DB.bigramFreqTable.loc[:,'prefix'] == errorword]
+        bigramList = DB.bigramFreqTable[DB.bigramFreqTable.loc[:,'prefix'] == prefixword]
         for index, row in bigramList.iterrows():
             med = distance(errorword, row[1])
             DB.bigramFreqTable.loc[index, 'MED'] = med
-
-            suggested_words.append(
-                (row[1], row[4], row[2])
-            )
+            if errorword != row[1]: #dont include self
+                suggested_words.append(
+                    (row[1], row[4], row[2])
+                )
 
     suggested_words = pd.DataFrame(suggested_words, columns = ['Suggested Word', 'Minimum Edit Distance', 'Frequency'])
     suggested_words = suggested_words.sort_values(['Minimum Edit Distance', 'Frequency', 'Suggested Word'], ascending=[True, False, True])
@@ -143,7 +143,7 @@ class MainFrame(object):
 
                                     self.txtarea.tag_configure(errorword, background='blue', foreground='white')  # non word error
                                     self.txtarea.tag_add(errorword, pos_start, pos_end)
-                                    self.txtarea.tag_bind(errorword, '<Button-3>', lambda event, arg1 = errorword, arg2 = detector : onPopup(event, arg1, arg2))  # right click event
+                                    self.txtarea.tag_bind(errorword, '<Button-3>', lambda event, arg1 = errorword, arg2 = '', arg3 = detector : onPopup(event, arg1, arg2, arg3))  # right click event
 
                                 # search again from pos_end to the end of text (END)
                                 if (errorword == word):
@@ -156,7 +156,7 @@ class MainFrame(object):
             input_tokenized = word_tokenize(words.lower()) #tokenize input sentence
             input_bigrams = [] #reset the list on scanning
             input_bigrams = list(nltk.bigrams(input_tokenized))
-
+            pos_start = ''
 
             for bigram in input_bigrams: #begin looping the input bigram
                 valid1, valid2 = False, False
@@ -176,26 +176,36 @@ class MainFrame(object):
                     errorword = input_suffix
                     sentence = '{0} {1}'.format(input_prefix, input_suffix)
 
+                    if sentence not in error_word_dict:
+                        error_word_dict.append(sentence)
+
                     pos_sent_start = self.txtarea.search(sentence, '1.0', END)
                     sent_offset = '+%dc' % len(pos_sent_start)
 
-                    pos_start = self.txtarea.search(errorword, '1.0', END)
+                    if not pos_start: #initialize with first suffix word detected
+                        pos_start = self.txtarea.search(errorword, '1.0', END)
+                    else: #refresh starting point of highlight based on last bigram stop point
+                        pos_start = self.txtarea.search(errorword, pos_sent_start, END)
+
                     offset = '+%dc ' % len(errorword)
 
                     while pos_sent_start:
                         pos_sent_end = pos_sent_start + sent_offset
                         pos_end = pos_start + offset
 
-                        self.txtarea.tag_configure(sentence, background='blue',
-                                                   foreground='white')  # non word error
-                        self.txtarea.tag_add(sentence, pos_start, pos_end)
-                        self.txtarea.tag_bind(sentence, '<Button-3>',
-                                              lambda event, arg1=input_prefix, arg2=detector: onPopup(event, arg1,
-                                                                                                   arg2))  # right click event
+                        nrow = len(DB.bigramFreqTable[(DB.bigramFreqTable['prefix'] == input_prefix) &
+                                                      (DB.bigramFreqTable['suffix'] == input_suffix)].index)
+
+                        if nrow == 0: #if the input bigram pair dont exist in corpus bigram pair, highlight
+                            self.txtarea.tag_configure(sentence, background='blue',
+                                                       foreground='white')  # non word error
+                            self.txtarea.tag_add(sentence, pos_start, pos_end)
+                            self.txtarea.tag_bind(sentence, '<Button-3>',
+                                                  lambda event, arg1=input_suffix, arg2= input_prefix, arg3=detector: onPopup(event, arg1, arg2, arg3))  # right click event
 
                         # search again from pos_end to the end of text (END)
                         pos_sent_start = self.txtarea.search(sentence, pos_sent_end, END)
-                        pos_start = pos_sent_start
+                        pos_start = pos_sent_end
 
 
 class SearchFrame(object):
