@@ -4,28 +4,36 @@ import pandas as pd
 from tkinter import *  # Gui interface library
 from tkinter.ttk import * #combobox
 from Levenshtein import distance  #Levenshtein distance library
+import nltk #natural language toolkit
 from nltk.tokenize import word_tokenize
-
-root = tk.Tk()
-error_word_dict = []
 
 def onPopup(event, errorword, detector):
     # display the popup menu
     errorword = errorword.lower() #convert to lower
     suggested_words = [] #list of suggested words
-    for suggested_word in DB.filteredTokens:
-        if errorword != suggested_word:
-            min_edit_distance = distance(errorword, suggested_word)
-            frequency = DB.uniq_token_freq[suggested_word]
+    if detector == 'Non Word':
+        for suggested_word in DB.filteredTokens:
+            if errorword != suggested_word:
+                min_edit_distance = distance(errorword, suggested_word)
+                frequency = DB.uniq_token_freq[suggested_word]
+                suggested_words.append(
+                    (suggested_word, min_edit_distance, frequency)
+                )
+    elif detector == 'Real Word':
+        bigramList = DB.bigramFreqTable[DB.bigramFreqTable.loc[:,'prefix'] == errorword]
+        for index, row in bigramList.iterrows():
+            med = distance(errorword, row[1])
+            DB.bigramFreqTable.loc[index, 'MED'] = med
+
             suggested_words.append(
-                (suggested_word, min_edit_distance, frequency)
+                (row[1], row[4], row[2])
             )
 
     suggested_words = pd.DataFrame(suggested_words, columns = ['Suggested Word', 'Minimum Edit Distance', 'Frequency'])
     suggested_words = suggested_words.sort_values(['Minimum Edit Distance', 'Frequency', 'Suggested Word'], ascending=[True, False, True])
 
     popup = Menu(root, tearoff=0)
-    popup.add_command(label=('{0} | {1} | {2}'.format('Best Matched Word', 'MED', 'FREQ')))
+    popup.add_command(label=('{0} | {1} | {2}'.format('Best Matched Word', 'MED', 'Frequency')))
     popup.add_separator()
 
     i = 0
@@ -88,21 +96,19 @@ class MainFrame(object):
 
         global error_word_dict
 
-        # reset
+        # reset highlight
         if error_word_dict:
             for error_word in error_word_dict:
                 self.txtarea.tag_remove(error_word, '1.0', END)
-
-        non_word_dict = []
         # end reset
 
         words = self.txtarea.get('1.0', END)
 
         r, row, column = 1, 15, 50
 
-        for word in words.split():
-            if word:
-                if detector == 'Non Word':
+        if detector == 'Non Word':
+            for word in words.split():
+                if word:
                     if word.lower() not in DB.filteredTokens:
                         r = 1
                         while r <= row:
@@ -146,6 +152,51 @@ class MainFrame(object):
                                 c += 1 #slide forward
                                 prefixidx = c - len(word)
                             r += 1
+        elif detector == 'Real Word':
+            input_tokenized = word_tokenize(words.lower()) #tokenize input sentence
+            input_bigrams = [] #reset the list on scanning
+            input_bigrams = list(nltk.bigrams(input_tokenized))
+
+
+            for bigram in input_bigrams: #begin looping the input bigram
+                valid1, valid2 = False, False
+                for dictWord in DB.filteredTokens: #search through dictionary
+                    input_prefix, input_suffix = bigram[0], bigram[1]
+
+                    if (input_prefix == dictWord and valid1 == False):
+                        valid1 = True
+
+                    if (input_suffix == dictWord and valid2 == False):
+                        valid2 = True
+
+                    if (valid1 == True and valid2 == True):
+                        break
+
+                if (valid1 == True and valid2 == True): #both words in bigram are valid and exist in dictionary
+                    errorword = input_suffix
+                    sentence = '{0} {1}'.format(input_prefix, input_suffix)
+
+                    pos_sent_start = self.txtarea.search(sentence, '1.0', END)
+                    sent_offset = '+%dc' % len(pos_sent_start)
+
+                    pos_start = self.txtarea.search(errorword, '1.0', END)
+                    offset = '+%dc ' % len(errorword)
+
+                    while pos_sent_start:
+                        pos_sent_end = pos_sent_start + sent_offset
+                        pos_end = pos_start + offset
+
+                        self.txtarea.tag_configure(sentence, background='blue',
+                                                   foreground='white')  # non word error
+                        self.txtarea.tag_add(sentence, pos_start, pos_end)
+                        self.txtarea.tag_bind(sentence, '<Button-3>',
+                                              lambda event, arg1=input_prefix, arg2=detector: onPopup(event, arg1,
+                                                                                                   arg2))  # right click event
+
+                        # search again from pos_end to the end of text (END)
+                        pos_sent_start = self.txtarea.search(sentence, pos_sent_end, END)
+                        pos_start = pos_sent_start
+
 
 class SearchFrame(object):
     def __init__(self):
@@ -189,6 +240,10 @@ class SearchFrame(object):
         self.dictlistbox.delete(0, END) #initially remove all items
         for word in sorted(self.filteredTokens):
             self.dictlistbox.insert(END, str(word))
+
+
+root = tk.Tk()
+error_word_dict = []
 
 Init()
 root.mainloop()

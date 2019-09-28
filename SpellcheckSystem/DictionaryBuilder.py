@@ -2,6 +2,8 @@ import io #to streamread file
 import os #directory locator
 import re #regular expression
 import string #remove punctuation
+import collections
+import pandas as pd
 import nltk #natural language toolkit
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -10,6 +12,7 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 
+# non word builder section
 def convert_pdf_to_txt(path):
     rsrcmgr = PDFResourceManager()
     retstr = io.StringIO()
@@ -36,6 +39,7 @@ def convert_pdf_to_txt(path):
     retstr.close()
     return text
 
+
 CorpusPath = 'F:/APU/Modules/NLP/Assignment/Corpus document'
 pdfs = os.listdir(CorpusPath)
 fulltext= ''
@@ -53,13 +57,13 @@ for word in fulltext.split():
     if not bMatch:
         content += word + ' '
 
-tokens = []
-uniq_token_freq = []
-bigram_freq = {}
-sent_tokenized = []
-filteredTokens = []
 stopTokens = stopwords.words('english') + list(string.punctuation)
-word_tokens = word_tokenize(content)
+word_tokens = word_tokenize(content) #form word token from raw content
+uniq_token_freq = [] #list of unique word frequency
+filteredTokens = [] #list of token to hold unique word as dictionary
+tokens = [] #list of repeated word
+prefix_keys = collections.defaultdict(list)
+bigramFreqList = []
 
 for w in word_tokens:
     w = w.lower() #convert word to lower case
@@ -74,13 +78,29 @@ for w in word_tokens:
         if w and len(w) is not 1:
             tokens.append(w)
 
-uniq_token_freq = nltk.FreqDist(tokens)
+uniq_token_freq = nltk.FreqDist(tokens) # Unique token frequency
+# end non word builder
 
-#Bigram builder
-bigrams = list(nltk.bigrams(word_tokens))
-length = len(tokens)
-for i in range(length - 1):
-    bigram = (tokens[i], tokens[i + 1])
-    if bigram not in bigram_freq:
-        bigram_freq[bigram] = 0
-        bigram_freq[bigram] += 1
+# Real word builder
+# Build a bigram from context
+bigrams = nltk.collocations.BigramAssocMeasures() #association measurement
+bigramFinder = nltk.collocations.BigramCollocationFinder.from_words(tokens) #form bigram object
+scored = bigramFinder.score_ngrams(bigrams.likelihood_ratio) #calculate maximum likelihood
+bigram_freq = bigramFinder.ngram_fd.items() #calculate frequency per item
+
+for bigram in bigram_freq:
+    prefix, suffix, frequency = bigram[0][0], bigram[0][1], bigram[1]
+
+    for key, score in scored:
+        key_prefix, key_suffix = key[0], key[1]
+
+        if (key_prefix == prefix and key_suffix == suffix):
+            bigramFreqList.append(
+                (prefix, suffix, frequency, score)
+            )
+
+bigramFreqTable = pd.DataFrame(list(bigramFreqList),
+                               columns=['prefix', 'suffix', 'freq', 'ratio']).sort_values(['prefix', 'freq', 'ratio', 'suffix'],
+                               ascending=[True, False, False, True])
+bigramFreqTable['MED'] = 0
+# end real word builder

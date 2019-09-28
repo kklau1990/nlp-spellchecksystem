@@ -1,1 +1,3 @@
 Version 1.2 only works for nonword error detection. Real word detection is still in progress developing.
+
+Version 2.0 fixes right click error. Real word is functioning, but highlight slightly error on prefix..fixing...

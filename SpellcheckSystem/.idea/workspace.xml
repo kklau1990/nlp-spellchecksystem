@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="106" column="29" lean-forward="true" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
+            <state relative-caret-position="149">
+              <caret line="39" column="44" lean-forward="true" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -25,8 +25,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-652">
-              <caret line="4" column="37" lean-forward="true" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+            <state relative-caret-position="136">
+              <caret line="103" column="68" lean-forward="true" selection-start-line="102" selection-start-column="77" selection-end-line="103" selection-end-column="68" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -42,11 +45,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&quot;</find>
-      <find>ScanResult</find>
-      <find>https</find>
       <find>sort</find>
-      <find>filteredTokens</find>
       <find>able</find>
       <find>offset</find>
       <find>print</find>
@@ -54,11 +53,28 @@
       <find>self.non</find>
       <find>HighlightedWords</find>
       <find>sent</find>
-      <find>bigram_freq</find>
       <find>on_field_change</find>
       <find>'</find>
       <find>nonword</find>
       <find>sent_tokenize</find>
+      <find>sent_tokenized</find>
+      <find>non_word_d</find>
+      <find>non_word_dict</find>
+      <find>bigram</find>
+      <find>bigram_freq</find>
+      <find>filteredTokens</find>
+      <find>scored</find>
+      <find>word_tokens</find>
+      <find>tokens</find>
+      <find>bigramFreqTable</find>
+      <find>bigramTest</find>
+      <find>valid3</find>
+      <find>raw_text</find>
+      <find>command</find>
+      <find>onPopup</find>
+      <find>rem</find>
+      <find>error_word_dict</find>
+      <find>errorword</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -97,7 +113,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.externalDependencies" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -197,15 +213,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.47630924" visible="true" weight="0.25" />
-      <window_info id="Structure" order="2" sideWeight="0.52369076" side_tool="true" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4698795" visible="true" weight="0.25" />
+      <window_info id="Structure" order="2" sideWeight="0.5301205" side_tool="true" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.281362" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.4050179" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" />
@@ -238,22 +254,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="15" column="14" selection-end-line="15" selection-end-column="14" />
+        <state relative-caret-position="171">
+          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-652">
-          <caret line="4" column="37" lean-forward="true" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+        <state relative-caret-position="136">
+          <caret line="103" column="68" lean-forward="true" selection-start-line="102" selection-start-column="77" selection-end-line="103" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="106" column="29" lean-forward="true" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
+        <state relative-caret-position="149">
+          <caret line="39" column="44" lean-forward="true" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
