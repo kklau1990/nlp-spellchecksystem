@@ -102,5 +102,4 @@ for bigram in bigram_freq:
 bigramFreqTable = pd.DataFrame(list(bigramFreqList),
                                columns=['prefix', 'suffix', 'freq', 'ratio']).sort_values(['prefix', 'freq', 'ratio', 'suffix'],
                                ascending=[True, False, False, True])
-bigramFreqTable['MED'] = 0
 # end real word builder

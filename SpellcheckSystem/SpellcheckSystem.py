@@ -17,20 +17,21 @@ def onPopup(event, errorword, prefixword, detector):
                 min_edit_distance = distance(errorword, suggested_word)
                 frequency = DB.uniq_token_freq[suggested_word]
                 suggested_words.append(
-                    (suggested_word, min_edit_distance, frequency)
+                    # Non word error does not have measurement of maximum likelihood implemented, default as 0
+                    (suggested_word, min_edit_distance, frequency, 0)
                 )
     elif detector == 'Real Word':
         bigramList = DB.bigramFreqTable[DB.bigramFreqTable.loc[:,'prefix'] == prefixword]
         for index, row in bigramList.iterrows():
             med = distance(errorword, row[1])
-            DB.bigramFreqTable.loc[index, 'MED'] = med
             if errorword != row[1]: #dont include self
                 suggested_words.append(
-                    (row[1], row[4], row[2])
+                    # MSuggested Word, MED, Frequency, Ratio,
+                    (row[1], med, row[2], row[3])
                 )
 
-    suggested_words = pd.DataFrame(suggested_words, columns = ['Suggested Word', 'Minimum Edit Distance', 'Frequency'])
-    suggested_words = suggested_words.sort_values(['Minimum Edit Distance', 'Frequency', 'Suggested Word'], ascending=[True, False, True])
+    suggested_words = pd.DataFrame(suggested_words, columns = ['Suggested Word', 'Minimum Edit Distance', 'Frequency', 'Ratio'])
+    suggested_words = suggested_words.sort_values(['Minimum Edit Distance', 'Frequency', 'Ratio', 'Suggested Word'], ascending=[True, False, False, True])
 
     popup = Menu(root, tearoff=0)
     popup.add_command(label=('{0} | {1} | {2}'.format('Best Matched Word', 'MED', 'Frequency')))
@@ -192,11 +193,11 @@ class MainFrame(object):
                     while pos_sent_start:
                         pos_sent_end = pos_sent_start + sent_offset
                         pos_end = pos_start + offset
-
                         nrow = len(DB.bigramFreqTable[(DB.bigramFreqTable['prefix'] == input_prefix) &
                                                       (DB.bigramFreqTable['suffix'] == input_suffix)].index)
 
-                        if nrow == 0: #if the input bigram pair dont exist in corpus bigram pair, highlight
+                        if nrow == 0: # if the input bigram pair dont exist in corpus bigram pair, highlight
+                            # please do not insert Enter in the textarea otherwise the highlight feature will break due to positioning measurement limitation
                             self.txtarea.tag_configure(sentence, background='blue',
                                                        foreground='white')  # non word error
                             self.txtarea.tag_add(sentence, pos_start, pos_end)
@@ -259,4 +260,53 @@ Init()
 root.mainloop()
 
 
+# extract prefix as estimator
+def bigram_features(prefix):
+    return {'prefix': prefix.lower()}
 
+# Naive Bayes classifier to predict bigram suffix
+# import random
+# bigram_list = ([(row[0], row[1]) for index, row in DB.bigramFreqTable.iterrows()])
+# random.shuffle(bigram_list)
+#
+# featuresets = [(bigram_features(n), bigram) for (n, bigram) in bigram_list]
+# train_set, test_set = featuresets[6300:], featuresets[:6300]
+# classifier = nltk.NaiveBayesClassifier.train(train_set)
+#
+# print(classifier.classify(bigram_features('acknowledge')))
+# print(nltk.classify.accuracy(classifier, test_set))
+#
+# train_prefix = bigrams[6300:]
+# devtest_prefix = bigrams[6300:8000]
+# test_prefix = bigrams[:6300]
+#
+# train_set = [(bigram_features(n), suffix) for (n, suffix) in train_prefix]
+# devtest_set = [(bigram_features(n), suffix) for (n, suffix) in devtest_prefix]
+# test_set = [(bigram_features(n), suffix) for (n, suffix) in test_prefix]
+# classifier = nltk.NaiveBayesClassifier.train(train_set)
+# print(nltk.classify.accuracy(classifier, devtest_set))
+#
+# errors = []
+# correct = []
+# prediction_list = []
+# for (prefix, actual) in devtest_prefix:
+#     guess = classifier.classify(bigram_features(prefix))
+#     prediction_list.append((actual, guess, prefix))
+#     if guess != actual:
+#         errors.append((actual, guess, prefix))
+#     else:
+#         correct.append((actual, guess, prefix))
+#
+# for (actual, guess, name) in sorted(errors):
+#     print('actual={:<8} guess={:<8s} name={:<30}'.format(actual, guess, name))
+#
+# for (actual, guess, name) in sorted(correct):
+#     print('actual={:<8} guess={:<8s} name={:<30}'.format(actual, guess, name))
+#
+# def column(matrix, i):
+#     return [row[i] for row in matrix]
+#
+# cm = nltk.ConfusionMatrix(column(prediction_list,0), column(prediction_list,1))
+# print(cm.pretty_format(sort_by_count=True))
+#
+# cm

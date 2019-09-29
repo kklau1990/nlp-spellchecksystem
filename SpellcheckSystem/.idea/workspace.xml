@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9">
-              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+            <state relative-caret-position="-576">
+              <caret line="271" column="76" selection-start-line="271" selection-start-column="76" selection-end-line="271" selection-end-column="76" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -25,8 +25,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="105" column="23" lean-forward="true" selection-end-line="105" selection-end-column="23" />
+            <state relative-caret-position="73">
+              <caret line="85" column="7" selection-start-line="85" selection-end-line="85" selection-end-column="7" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -45,10 +45,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sort</find>
       <find>able</find>
       <find>offset</find>
-      <find>print</find>
       <find>arbit</find>
       <find>self.non</find>
       <find>HighlightedWords</find>
@@ -75,6 +73,8 @@
       <find>rem</find>
       <find>errorword</find>
       <find>error_word_dict</find>
+      <find>print</find>
+      <find>bigrams</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -88,8 +88,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-4" />
-    <option name="y" value="3" />
+    <option name="x" value="196" />
+    <option name="y" value="9" />
     <option name="width" value="1346" />
     <option name="height" value="688" />
   </component>
@@ -113,6 +113,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Tutorial" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -216,11 +217,11 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.46686748" visible="true" weight="0.25" />
-      <window_info id="Structure" order="2" sideWeight="0.53313255" side_tool="true" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.45714286" visible="true" weight="0.25" />
+      <window_info id="Structure" order="2" sideWeight="0.54285717" side_tool="true" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.4050179" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.4982079" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" />
@@ -254,8 +255,8 @@
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="105" column="23" lean-forward="true" selection-end-line="105" selection-end-column="23" />
+        <state relative-caret-position="73">
+          <caret line="85" column="7" selection-start-line="85" selection-end-line="85" selection-end-column="7" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -264,8 +265,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9">
-          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+        <state relative-caret-position="-576">
+          <caret line="271" column="76" selection-start-line="271" selection-start-column="76" selection-end-line="271" selection-end-column="76" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
