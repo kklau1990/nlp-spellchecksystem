@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-576">
-              <caret line="271" column="76" selection-start-line="271" selection-start-column="76" selection-end-line="271" selection-end-column="76" />
+            <state relative-caret-position="94">
+              <caret line="144" column="120" selection-start-line="144" selection-start-column="120" selection-end-line="144" selection-end-column="120" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -25,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
+            <state relative-caret-position="1241">
               <caret line="85" column="7" selection-start-line="85" selection-end-line="85" selection-end-column="7" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
@@ -214,11 +214,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.45714286" visible="true" weight="0.25" />
-      <window_info id="Structure" order="2" sideWeight="0.54285717" side_tool="true" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.45357144" visible="true" weight="0.25" />
+      <window_info id="Structure" order="2" sideWeight="0.54642856" side_tool="true" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.4982079" />
@@ -253,22 +254,22 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py" />
-    <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
+    <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="85" column="7" selection-start-line="85" selection-end-line="85" selection-end-column="7" />
+        <state relative-caret-position="94">
+          <caret line="144" column="120" selection-start-line="144" selection-start-column="120" selection-end-line="144" selection-end-column="120" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
+    <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-576">
-          <caret line="271" column="76" selection-start-line="271" selection-start-column="76" selection-end-line="271" selection-end-column="76" />
+        <state relative-caret-position="1241">
+          <caret line="85" column="7" selection-start-line="85" selection-end-line="85" selection-end-column="7" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>

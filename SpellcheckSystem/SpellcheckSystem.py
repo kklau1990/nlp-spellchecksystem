@@ -142,7 +142,7 @@ class MainFrame(object):
                                     if word not in error_word_dict:
                                         error_word_dict.append(word)
 
-                                    self.txtarea.tag_configure(errorword, background='blue', foreground='white')  # non word error
+                                    self.txtarea.tag_configure(errorword, background='blue', foreground='white')  # real word error
                                     self.txtarea.tag_add(errorword, pos_start, pos_end)
                                     self.txtarea.tag_bind(errorword, '<Button-3>', lambda event, arg1 = errorword, arg2 = '', arg3 = detector : onPopup(event, arg1, arg2, arg3))  # right click event
 
