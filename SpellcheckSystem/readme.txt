@@ -1,0 +1,1 @@
+NaiveBayes code should run separately from tkinter gui. Mainly for analysis purpose only.
