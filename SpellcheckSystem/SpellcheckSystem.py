@@ -261,8 +261,8 @@ root.mainloop()
 
 
 # extract prefix as estimator
-def bigram_features(prefix):
-    return {'prefix': prefix.lower()}
+# def bigram_features(prefix):
+#     return {'prefix': prefix.lower()}
 
 # Naive Bayes classifier to predict bigram suffix
 # import random
