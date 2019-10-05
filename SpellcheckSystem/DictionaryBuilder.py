@@ -72,10 +72,10 @@ for w in word_tokens:
         # not an empty string after trimming
         # not repeated token
         # not single character because it is not a word
-        if w and w not in filteredTokens and len(w) is not 1:
+        if w and w not in filteredTokens and len(w) > 2:
             filteredTokens.append(w)
 
-        if w and len(w) is not 1:
+        if w and len(w) > 2:
             tokens.append(w)
 
 uniq_token_freq = nltk.FreqDist(tokens) # Unique token frequency
