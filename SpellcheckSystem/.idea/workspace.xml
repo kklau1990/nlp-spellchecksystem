@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="144" column="120" selection-start-line="144" selection-start-column="120" selection-end-line="144" selection-end-column="120" />
+            <state relative-caret-position="191">
+              <caret line="201" column="82" selection-start-line="201" selection-start-column="82" selection-end-line="201" selection-end-column="82" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -25,8 +25,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1241">
-              <caret line="85" column="7" selection-start-line="85" selection-end-line="85" selection-end-column="7" />
+            <state relative-caret-position="1071">
+              <caret line="75" column="36" selection-end-line="104" selection-end-column="23" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -45,15 +45,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>able</find>
-      <find>offset</find>
-      <find>arbit</find>
-      <find>self.non</find>
-      <find>HighlightedWords</find>
-      <find>sent</find>
-      <find>on_field_change</find>
-      <find>'</find>
-      <find>nonword</find>
       <find>sent_tokenize</find>
       <find>sent_tokenized</find>
       <find>non_word_d</find>
@@ -69,12 +60,21 @@
       <find>valid3</find>
       <find>raw_text</find>
       <find>command</find>
-      <find>onPopup</find>
       <find>rem</find>
-      <find>errorword</find>
       <find>error_word_dict</find>
-      <find>print</find>
       <find>bigrams</find>
+      <find>non word error</find>
+      <find>error</find>
+      <find>Suggest</find>
+      <find>self.sugg</find>
+      <find>onPopup</find>
+      <find>onpopup</find>
+      <find>detector</find>
+      <find>med = distance(errorword, row[1])</find>
+      <find>prefixword</find>
+      <find>pos_sent_start</find>
+      <find>errorword</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -87,7 +87,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="196" />
     <option name="y" value="9" />
     <option name="width" value="1346" />
@@ -98,6 +98,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -109,11 +110,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Tutorial" />
+    <property name="last_opened_file_path" value="F:/nlp-spellchecksystem-master/SpellcheckSystem" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -214,15 +214,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.45357144" visible="true" weight="0.25" />
-      <window_info id="Structure" order="2" sideWeight="0.54642856" side_tool="true" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.43529412" visible="true" weight="0.25" />
+      <window_info id="Structure" order="2" sideWeight="0.5647059" side_tool="true" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.4982079" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.390681" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" />
@@ -256,8 +255,8 @@
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="144" column="120" selection-start-line="144" selection-start-column="120" selection-end-line="144" selection-end-column="120" />
+        <state relative-caret-position="191">
+          <caret line="201" column="82" selection-start-line="201" selection-start-column="82" selection-end-line="201" selection-end-column="82" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
@@ -266,8 +265,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="85" column="7" selection-start-line="85" selection-end-line="85" selection-end-column="7" />
+        <state relative-caret-position="1071">
+          <caret line="75" column="36" selection-end-line="104" selection-end-column="23" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
