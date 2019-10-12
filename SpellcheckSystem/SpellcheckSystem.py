@@ -75,18 +75,18 @@ class MainFrame(object):
         self.scroll.config(command=self.txtarea.yview)
 
     def onKeyPress(self, event):
-        global oriVal
-        oriVal = self.txtarea.get('1.0', END)
+        global oriVal  # declare as global variable accessible by all members in the same class
+        oriVal = self.txtarea.get('1.0', END)  # get current textarea value from beginning to end index
 
     def onKeyRelease(self, event):
-        if (len(self.txtarea.get('1.0', END)) > 500):
-            trimValue = self.txtarea.get('1.0', END)[:499]
+        if (len(self.txtarea.get('1.0', END)) > 500):  # if sum of characters exceed 500
+            trimValue = self.txtarea.get('1.0', END)[:500]  # keep only up to 500 characters
         else:
-            trimValue = oriVal
+            trimValue = oriVal  # no trimming is required
 
-        if (trimValue != oriVal):
-            self.txtarea.delete('1.0', END)
-            self.txtarea.insert(INSERT, trimValue)
+        if (trimValue != oriVal):  # if user copy and paste the whole paragraphs
+            self.txtarea.delete('1.0', END)  # remove all values in the textarea
+            self.txtarea.insert(INSERT, trimValue)  # insert clipboard value
 
     def ScanResult(self):
         arbitary_word = ''
@@ -103,58 +103,49 @@ class MainFrame(object):
                 self.txtarea.tag_remove(error_word, '1.0', END)
         # end reset
 
-        words = self.txtarea.get('1.0', END)
-
-        r, row, column = 1, 15, 50
+        input = self.txtarea.get('1.0', END)
 
         if detector == 'Non Word':
-            for word in words.split():
+            for word in input.split():
                 if word:
                     if word.lower() not in DB.filteredTokens:
-                        r = 1
-                        while r <= row:
-                            pos_start = self.txtarea.search(word, '1.0', END)
-                            c = len(word)  # reset column count upon new row
-                            prefixidx = 0
+                        prefixidx = 0
+                        suffixidx = len(word)
+                        pos_start = self.txtarea.search(word, '1.0', END)
 
-                            while c <= column:
-                                suffixidx = c
+                        while prefixidx < len(input):
+                            earlier_prefix_idx = prefixidx - 1
+                            if earlier_prefix_idx < 0:
+                                earlier_prefix_idx = 0
 
-                                raw_text = words
+                            prefix = input[earlier_prefix_idx:prefixidx] #character before initial prefix value
+                            suffix = input[suffixidx:suffixidx + 1] #character after suffix value
+                            errorword = input[prefixidx:suffixidx] #current slided word
 
-                                earlier_prefix_idx = prefixidx - 1
-                                if earlier_prefix_idx < 0:
-                                    earlier_prefix_idx = 0
+                            offset = '+%dc' % len(word)
 
-                                prefix = raw_text[earlier_prefix_idx:prefixidx]
-                                suffix = raw_text[suffixidx:suffixidx + 1]
-                                errorword = raw_text[prefixidx:suffixidx]
+                            if pos_start:
+                                pos_end = pos_start + offset
 
-                                offset = '+%dc' % len(word)
+                            # add tag
+                            if (errorword == word and (not re.findall('^[A-Za-z0-9]', prefix))
+                            and (not re.findall('^[A-Za-z0-9]', suffix))):
 
-                                if pos_start:
-                                    pos_end = pos_start + offset
+                                if word not in error_word_dict:
+                                    error_word_dict.append(word)
 
-                                # add tag
-                                if (errorword == word and (not re.findall('^[A-Za-z0-9]', prefix))
-                                and (not re.findall('^[A-Za-z0-9]', suffix))):
+                                self.txtarea.tag_configure(errorword, background='blue', foreground='white')  # non word error
+                                self.txtarea.tag_add(errorword, pos_start, pos_end)
+                                self.txtarea.tag_bind(errorword, '<Button-3>', lambda event, arg1 = errorword, arg2 = '', arg3 = detector : onPopup(event, arg1, arg2, arg3))  # right click event
 
-                                    if word not in error_word_dict:
-                                        error_word_dict.append(word)
+                            # search again from pos_end to the end of text (END)
+                            if (errorword == word):
+                                pos_start = self.txtarea.search(word, pos_end, END)
 
-                                    self.txtarea.tag_configure(errorword, background='blue', foreground='white')  # non word error
-                                    self.txtarea.tag_add(errorword, pos_start, pos_end)
-                                    self.txtarea.tag_bind(errorword, '<Button-3>', lambda event, arg1 = errorword, arg2 = '', arg3 = detector : onPopup(event, arg1, arg2, arg3))  # right click event
-
-                                # search again from pos_end to the end of text (END)
-                                if (errorword == word):
-                                    pos_start = self.txtarea.search(word, pos_end, END)
-
-                                c += 1 #slide forward
-                                prefixidx = c - len(word)
-                            r += 1
+                            prefixidx += 1 #slide forward by 1 character
+                            suffixidx += 1 #slide forward by 1 character
         elif detector == 'Real Word':
-            input_tokenized = word_tokenize(words.lower()) #tokenize input sentence
+            input_tokenized = word_tokenize(input.lower()) #tokenize input sentence
             input_bigrams = [] #reset the list on scanning
             input_bigrams = list(nltk.bigrams(input_tokenized))
             pos_start = ''
@@ -258,55 +249,3 @@ error_word_dict = []
 
 Init()
 root.mainloop()
-
-
-# extract prefix as estimator
-# def bigram_features(prefix):
-#     return {'prefix': prefix.lower()}
-
-# Naive Bayes classifier to predict bigram suffix
-# import random
-# bigram_list = ([(row[0], row[1]) for index, row in DB.bigramFreqTable.iterrows()])
-# random.shuffle(bigram_list)
-#
-# featuresets = [(bigram_features(n), bigram) for (n, bigram) in bigram_list]
-# train_set, test_set = featuresets[6300:], featuresets[:6300]
-# classifier = nltk.NaiveBayesClassifier.train(train_set)
-#
-# print(classifier.classify(bigram_features('acknowledge')))
-# print(nltk.classify.accuracy(classifier, test_set))
-#
-# train_prefix = bigrams[6300:]
-# devtest_prefix = bigrams[6300:8000]
-# test_prefix = bigrams[:6300]
-#
-# train_set = [(bigram_features(n), suffix) for (n, suffix) in train_prefix]
-# devtest_set = [(bigram_features(n), suffix) for (n, suffix) in devtest_prefix]
-# test_set = [(bigram_features(n), suffix) for (n, suffix) in test_prefix]
-# classifier = nltk.NaiveBayesClassifier.train(train_set)
-# print(nltk.classify.accuracy(classifier, devtest_set))
-#
-# errors = []
-# correct = []
-# prediction_list = []
-# for (prefix, actual) in devtest_prefix:
-#     guess = classifier.classify(bigram_features(prefix))
-#     prediction_list.append((actual, guess, prefix))
-#     if guess != actual:
-#         errors.append((actual, guess, prefix))
-#     else:
-#         correct.append((actual, guess, prefix))
-#
-# for (actual, guess, name) in sorted(errors):
-#     print('actual={:<8} guess={:<8s} name={:<30}'.format(actual, guess, name))
-#
-# for (actual, guess, name) in sorted(correct):
-#     print('actual={:<8} guess={:<8s} name={:<30}'.format(actual, guess, name))
-#
-# def column(matrix, i):
-#     return [row[i] for row in matrix]
-#
-# cm = nltk.ConfusionMatrix(column(prediction_list,0), column(prediction_list,1))
-# print(cm.pretty_format(sort_by_count=True))
-#
-# cm

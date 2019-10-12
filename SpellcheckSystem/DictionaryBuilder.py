@@ -50,6 +50,7 @@ for pdf in pdfs:
 fulltext = fulltext.replace('\n', ' ')
 fulltext = re.sub('[0-9\x0c]+', '', fulltext) #remove all digits, unicode
 fulltext = re.sub(r'- ', '', fulltext) #remove breaking symbols to form complete word
+
 content = ''
 
 for word in fulltext.split():
