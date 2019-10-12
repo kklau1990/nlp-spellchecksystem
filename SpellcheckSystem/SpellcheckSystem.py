@@ -112,6 +112,7 @@ class MainFrame(object):
                         prefixidx = 0
                         suffixidx = len(word)
                         pos_start = self.txtarea.search(word, '1.0', END)
+                        pos_end = 0
 
                         while prefixidx < len(input):
                             earlier_prefix_idx = prefixidx - 1
@@ -124,22 +125,22 @@ class MainFrame(object):
 
                             offset = '+%dc' % len(word)
 
-                            if pos_start:
+                            if (errorword.lower() == word.lower()):
                                 pos_end = pos_start + offset
 
                             # add tag
-                            if (errorword == word and (not re.findall('^[A-Za-z0-9]', prefix))
+                            if (errorword.lower() == word.lower() and (not re.findall('^[A-Za-z0-9]', prefix))
                             and (not re.findall('^[A-Za-z0-9]', suffix))):
 
                                 if word not in error_word_dict:
-                                    error_word_dict.append(word)
+                                    error_word_dict.append(word.lower())
 
                                 self.txtarea.tag_configure(errorword, background='blue', foreground='white')  # non word error
                                 self.txtarea.tag_add(errorword, pos_start, pos_end)
                                 self.txtarea.tag_bind(errorword, '<Button-3>', lambda event, arg1 = errorword, arg2 = '', arg3 = detector : onPopup(event, arg1, arg2, arg3))  # right click event
 
                             # search again from pos_end to the end of text (END)
-                            if (errorword == word):
+                            if (errorword.lower() == word.lower()):
                                 pos_start = self.txtarea.search(word, pos_end, END)
 
                             prefixidx += 1 #slide forward by 1 character
@@ -147,7 +148,7 @@ class MainFrame(object):
         elif detector == 'Real Word':
             input_tokenized = word_tokenize(input.lower()) #tokenize input sentence
             input_bigrams = [] #reset the list on scanning
-            input_bigrams = list(nltk.bigrams(input_tokenized))
+            input_bigrams = list(nltk.bigrams(word_tokenize(input)))
             pos_start = ''
 
             for bigram in input_bigrams: #begin looping the input bigram
@@ -155,10 +156,10 @@ class MainFrame(object):
                 for dictWord in DB.filteredTokens: #search through dictionary
                     input_prefix, input_suffix = bigram[0], bigram[1]
 
-                    if (input_prefix == dictWord and valid1 == False):
+                    if (input_prefix.lower() == dictWord and valid1 == False):
                         valid1 = True
 
-                    if (input_suffix == dictWord and valid2 == False):
+                    if (input_suffix.lower() == dictWord and valid2 == False):
                         valid2 = True
 
                     if (valid1 == True and valid2 == True):
@@ -167,9 +168,9 @@ class MainFrame(object):
                 if (valid1 == True and valid2 == True): #both words in bigram are valid and exist in dictionary
                     errorword = input_suffix
                     sentence = '{0} {1}'.format(input_prefix, input_suffix)
-
+                    print(sentence)
                     if sentence not in error_word_dict:
-                        error_word_dict.append(sentence)
+                        error_word_dict.append(sentence.lower())
 
                     pos_sent_start = self.txtarea.search(sentence, '1.0', END)
                     sent_offset = '+%dc' % len(pos_sent_start)
@@ -184,8 +185,8 @@ class MainFrame(object):
                     while pos_sent_start:
                         pos_sent_end = pos_sent_start + sent_offset
                         pos_end = pos_start + offset
-                        nrow = len(DB.bigramFreqTable[(DB.bigramFreqTable['prefix'] == input_prefix) &
-                                                      (DB.bigramFreqTable['suffix'] == input_suffix)].index)
+                        nrow = len(DB.bigramFreqTable[(DB.bigramFreqTable['prefix'] == input_prefix.lower()) &
+                                                      (DB.bigramFreqTable['suffix'] == input_suffix.lower())].index)
 
                         if nrow == 0: # if the input bigram pair dont exist in corpus bigram pair, highlight
                             # please do not insert Enter in the textarea otherwise the highlight feature will break due to positioning measurement limitation
@@ -193,7 +194,7 @@ class MainFrame(object):
                                                        foreground='white')  # read word error
                             self.txtarea.tag_add(sentence, pos_start, pos_end)
                             self.txtarea.tag_bind(sentence, '<Button-3>',
-                                                  lambda event, arg1=input_suffix, arg2= input_prefix, arg3=detector: onPopup(event, arg1, arg2, arg3))  # right click event
+                                                  lambda event, arg1=input_suffix.lower(), arg2= input_prefix.lower(), arg3=detector: onPopup(event, arg1, arg2, arg3))  # right click event
 
                         # search again from pos_end to the end of text (END)
                         pos_sent_start = self.txtarea.search(sentence, pos_sent_end, END)
