@@ -168,7 +168,7 @@ class MainFrame(object):
                 if (valid1 == True and valid2 == True): #both words in bigram are valid and exist in dictionary
                     errorword = input_suffix
                     sentence = '{0} {1}'.format(input_prefix, input_suffix)
-                    print(sentence)
+
                     if sentence not in error_word_dict:
                         error_word_dict.append(sentence.lower())
 
