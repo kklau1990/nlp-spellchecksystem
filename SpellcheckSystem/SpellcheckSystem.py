@@ -62,6 +62,8 @@ class MainFrame(object):
         self.btn = Button(root, text='Scan', command=self.ScanResult)
         self.btn.grid(row = 0, column = 1)
         self.Textarea()
+        self.wordcountlbl = Label(root, text='Word Count: 0')
+        self.wordcountlbl.grid(row = 2, column = 0)
 
     def Textarea(self):
         self.txtareaframe = Frame(root)
@@ -79,14 +81,30 @@ class MainFrame(object):
         oriVal = self.txtarea.get('1.0', END)  # get current textarea value from beginning to end index
 
     def onKeyRelease(self, event):
-        if (len(self.txtarea.get('1.0', END)) > 500):  # if sum of characters exceed 500
-            trimValue = self.txtarea.get('1.0', END)[:500]  # keep only up to 500 characters
-        else:
+        iCount = 0
+        trimValue = ''
+
+        for str in self.txtarea.get('1.0', END).split():
+            if (iCount > 500):
+                break
+
+            if (trimValue != ''):
+                trimValue += ' '
+
+            trimValue += str
+            iCount += 1
+
+        if iCount < 500:
             trimValue = oriVal  # no trimming is required
 
         if (trimValue != oriVal):  # if user copy and paste the whole paragraphs
             self.txtarea.delete('1.0', END)  # remove all values in the textarea
             self.txtarea.insert(INSERT, trimValue)  # insert clipboard value
+
+        self.WordCounter(iCount)
+
+    def WordCounter(self, iCount):
+        self.wordcountlbl.configure(text='Word Count: {0}'.format(iCount))
 
     def ScanResult(self):
         arbitary_word = ''

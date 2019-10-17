@@ -6,7 +6,6 @@ import collections
 import pandas as pd
 import nltk #natural language toolkit
 from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -16,25 +15,20 @@ from pdfminer.pdfpage import PDFPage
 def convert_pdf_to_txt(path):
     rsrcmgr = PDFResourceManager()
     retstr = io.StringIO()
-    codec = 'utf-8'
-    laparams = LAParams()
-    device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
-    fp = open(path, 'rb')
+    device = TextConverter(rsrcmgr, retstr, codec='utf-8', laparams=LAParams())
+    filepath = open(path, 'rb')
     interpreter = PDFPageInterpreter(rsrcmgr, device)
-    password = ""
-    maxpages = 0
-    caching = True
     pagenos = set()
 
-    for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
-                                  password=password,
-                                  caching=caching,
+    for page in PDFPage.get_pages(filepath, pagenos, maxpages=0,
+                                  password='',
+                                  caching=True,
                                   check_extractable=True):
         interpreter.process_page(page)
 
     text = retstr.getvalue()
 
-    fp.close()
+    filepath.close()
     device.close()
     retstr.close()
     return text
@@ -58,7 +52,6 @@ for word in fulltext.split():
     if not bMatch:
         content += word + ' '
 
-stopTokens = stopwords.words('english') + list(string.punctuation)
 word_tokens = word_tokenize(content) #form word token from raw content
 uniq_token_freq = [] #list of unique word frequency
 filteredTokens = [] #list of token to hold unique word as dictionary
@@ -68,16 +61,14 @@ bigramFreqList = []
 
 for w in word_tokens:
     w = w.lower() #convert word to lower case
-    if w not in stopTokens:
-        w = re.sub(r'[^a-zA-Z]', '', w)
-        # not an empty string after trimming
-        # not repeated token
-        # not single character because it is not a word
-        if w and w not in filteredTokens and len(w) > 2:
-            filteredTokens.append(w)
+    w = re.sub(r'[^a-zA-Z]', '', w)
+    # not an empty string after trimming
+    # not repeated token
+    if w and w not in filteredTokens:
+        filteredTokens.append(w)
 
-        if w and len(w) > 2:
-            tokens.append(w)
+    if w:
+        tokens.append(w)
 
 uniq_token_freq = nltk.FreqDist(tokens) # Unique token frequency
 # end non word builder
