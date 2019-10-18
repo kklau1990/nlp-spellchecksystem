@@ -5,3 +5,5 @@ Version 2.0 fixes right click error. Real word is functioning, but highlight sli
 Version 2.0.1 fully funtional Non word and Real word detector
 
 Version 2.0.2 updated corpus document, and include NaiveBayes classifier prediction and analysis
+
+Version 3.0.1 Updated GUI, fixed error detection bug, and propose more viable suggestion words

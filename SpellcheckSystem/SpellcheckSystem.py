@@ -17,34 +17,34 @@ def onPopup(event, errorword, prefixword, detector):
                 min_edit_distance = distance(errorword, suggested_word)
                 frequency = DB.uniq_token_freq[suggested_word]
                 suggested_words.append(
-                    # Non word error does not have measurement of maximum likelihood implemented, default as 0
-                    (suggested_word, min_edit_distance, frequency, 0)
+                    # Non word error does not have measurement of maximum likelihood implemented, default as none
+                    (suggested_word, '-' ,min_edit_distance, frequency)
                 )
     elif detector == 'Real Word':
         bigramList = DB.bigramFreqTable[DB.bigramFreqTable.loc[:,'prefix'] == prefixword]
         for index, row in bigramList.iterrows():
-            med = distance(errorword, row[1])
-            if errorword != row[1]: #dont include self
+            min_edit_distance = distance(errorword, row[1])
+            if errorword != row[0]: #dont include self
                 suggested_words.append(
-                    # Suggested Word, MED, Frequency, Ratio,
-                    (row[1], med, row[2], row[3])
+                    # SBest Matched Word, Maximum Likelihood, MED, Frequency
+                    (row[1], row[3], min_edit_distance, row[2])
                 )
 
-    suggested_words = pd.DataFrame(suggested_words, columns = ['Suggested Word', 'Minimum Edit Distance', 'Frequency', 'Ratio'])
-    suggested_words = suggested_words.sort_values(['Minimum Edit Distance', 'Frequency', 'Ratio', 'Suggested Word'], ascending=[True, False, False, True])
+    suggested_words = pd.DataFrame(suggested_words, columns = ['Best Matched Word', 'Maximum Likelihood', 'MED', 'Frequency'])
+    suggested_words = suggested_words.sort_values(['Maximum Likelihood', 'MED', 'Frequency', 'Best Matched Word'], ascending=[False, True, False, True])
 
     popup = Menu(root, tearoff=0)
-    popup.add_command(label=('{0} | {1} | {2}'.format('Best Matched Word', 'MED', 'Frequency')))
+    popup.add_command(label=('{0} | {1} | {2} | {3}'.format('Best Matched Word', 'Maximum Likelihood', 'MED', 'Frequency')))
     popup.add_separator()
 
     i = 0
     for label in suggested_words.iterrows():
-        popup.add_command(label=('{0} | {1} | {2}'.format(label[1]['Suggested Word'], label[1]['Minimum Edit Distance'], label[1]['Frequency'])))
+        popup.add_command(label=('{0} | {1} | {2} | {3}'.format(label[1]['Best Matched Word'], label[1]['Maximum Likelihood'], label[1]['MED'], label[1]['Frequency'])))
         i += 1
         if i > 10:
             break
 
-    popup.tk_popup(event.x_root, event.y_root, 0)
+    popup.tk_popup(event.x_root + 180, event.y_root, 0)
     popup.grab_release()
 
 class Init(object):
@@ -85,7 +85,7 @@ class MainFrame(object):
         trimValue = ''
 
         for str in self.txtarea.get('1.0', END).split():
-            if (iCount > 500):
+            if (iCount == 500):
                 break
 
             if (trimValue != ''):
