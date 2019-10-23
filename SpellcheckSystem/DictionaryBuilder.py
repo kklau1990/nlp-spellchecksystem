@@ -1,10 +1,10 @@
-import io #to streamread file
-import os #directory locator
-import re #regular expression
-import string #remove punctuation
+import io  # to streamread file
+import os  # directory locator
+import re  # regular expression
+import string # remove punctuation
 import collections
 import pandas as pd
-import nltk #natural language toolkit
+import nltk  # natural language toolkit
 from nltk.tokenize import word_tokenize
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
@@ -35,32 +35,32 @@ def convert_pdf_to_txt(path):
 
 
 CorpusPath = 'F:/APU/Modules/NLP/Assignment/Corpus document'
-pdfs = os.listdir(CorpusPath)
+pdfs = os.listdir(CorpusPath)  # get all filename
 fulltext= ''
-for pdf in pdfs:
+for pdf in pdfs:  # iterate all pdf documents
     pdftext = convert_pdf_to_txt(CorpusPath + '/' + pdf)
-    fulltext = fulltext + pdftext
+    fulltext = fulltext + pdftext  # concatenate strings
 
-fulltext = fulltext.replace('\n', ' ')
-fulltext = re.sub('[0-9\x0c]+', '', fulltext) #remove all digits, unicode
-fulltext = re.sub(r'- ', '', fulltext) #remove breaking symbols to form complete word
+fulltext = fulltext.replace('\n', ' ')  # remove breakline
+fulltext = re.sub('[0-9\x0c]+', '', fulltext)  # remove all digits, unicode
+fulltext = re.sub(r'- ', '', fulltext)  # remove breaking symbols to form complete word
 
 content = ''
 
 for word in fulltext.split():
-    bMatch = (re.match(r'.http', word) or re.match(r'http', word)) #remove url, not important i think.....
+    bMatch = (re.match(r'.http', word) or re.match(r'http', word))  # remove url starts with http/https
     if not bMatch:
         content += word + ' '
 
-word_tokens = word_tokenize(content) #form word token from raw content
-uniq_token_freq = [] #list of unique word frequency
-filteredTokens = [] #list of token to hold unique word as dictionary
-tokens = [] #list of repeated word
+word_tokens = word_tokenize(content)  # form word token from raw content
+uniq_token_freq = []  # list of unique word frequency
+filteredTokens = []  # list of token to hold unique word as dictionary
+tokens = []  # list of repeated word
 prefix_keys = collections.defaultdict(list)
 bigramFreqList = []
 
 for w in word_tokens:
-    w = w.lower() #convert word to lower case
+    w = w.lower() # convert word to lower case
     w = re.sub(r'[^a-zA-Z]', '', w)
     # not an empty string after trimming
     # not repeated token
@@ -75,10 +75,10 @@ uniq_token_freq = nltk.FreqDist(tokens) # Unique token frequency
 
 # Real word builder
 # Build a bigram from context
-bigrams = nltk.collocations.BigramAssocMeasures() #association measurement
-bigramFinder = nltk.collocations.BigramCollocationFinder.from_words(tokens) #form bigram object
-scored = bigramFinder.score_ngrams(bigrams.likelihood_ratio) #calculate maximum likelihood
-bigram_freq = bigramFinder.ngram_fd.items() #calculate frequency per item
+bigrams = nltk.collocations.BigramAssocMeasures()  # association measurement
+bigramFinder = nltk.collocations.BigramCollocationFinder.from_words(tokens)  # form bigram object
+scored = bigramFinder.score_ngrams(bigrams.likelihood_ratio)  # calculate maximum likelihood
+bigram_freq = bigramFinder.ngram_fd.items()  # calculate frequency per item
 
 for bigram in bigram_freq:
     prefix, suffix, frequency = bigram[0][0], bigram[0][1], bigram[1]

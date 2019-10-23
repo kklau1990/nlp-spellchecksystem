@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="87" column="25" selection-end-line="270" />
+            <state relative-caret-position="306">
+              <caret line="272" column="75" lean-forward="true" selection-start-line="272" selection-start-column="75" selection-end-line="272" selection-end-column="75" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -25,8 +25,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+            <state relative-caret-position="-433">
+              <caret line="38" column="12" lean-forward="true" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -45,21 +45,16 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>scored</find>
-      <find>word_tokens</find>
-      <find>bigramFreqTable</find>
       <find>bigramTest</find>
       <find>valid3</find>
       <find>raw_text</find>
       <find>command</find>
       <find>rem</find>
-      <find>error_word_dict</find>
       <find>bigrams</find>
       <find>non word error</find>
       <find>error</find>
       <find>Suggest</find>
       <find>self.sugg</find>
-      <find>onPopup</find>
       <find>onpopup</find>
       <find>detector</find>
       <find>med = distance(errorword, row[1])</find>
@@ -75,6 +70,11 @@
       <find>tokens</find>
       <find>retstr</find>
       <find>.split</find>
+      <find>DB.bigramFreqTable[DB.bigramFreqTable.loc[:,'prefix']</find>
+      <find>onPopup</find>
+      <find>error_word_dict</find>
+      <find>sent_offset</find>
+      <find>mainloop</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -87,7 +87,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="195" />
     <option name="y" value="5" />
     <option name="width" value="1350" />
@@ -98,6 +98,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -109,7 +110,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -215,14 +215,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.3935185" visible="true" weight="0.24917382" />
-      <window_info id="Structure" order="2" sideWeight="0.6064815" side_tool="true" visible="true" weight="0.24917382" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.38526914" visible="true" weight="0.24917382" />
+      <window_info id="Structure" order="2" sideWeight="0.6147309" side_tool="true" visible="true" weight="0.24917382" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.388102" />
+      <window_info anchor="bottom" id="Python Console" order="2" weight="0.388102" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" />
@@ -263,8 +262,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DictionaryBuilder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+        <state relative-caret-position="-433">
+          <caret line="38" column="12" lean-forward="true" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -273,8 +272,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SpellcheckSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="87" column="25" selection-end-line="270" />
+        <state relative-caret-position="306">
+          <caret line="272" column="75" lean-forward="true" selection-start-line="272" selection-start-column="75" selection-end-line="272" selection-end-column="75" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
