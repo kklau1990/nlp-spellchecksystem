@@ -285,4 +285,4 @@ root = tk.Tk()
 error_word_dict = []
 
 Init()
-
+root.mainloop()
